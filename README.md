@@ -156,7 +156,7 @@ ___
 
 | DDGS function | Available backends |
 | --------------|:-------------------|
-| text()        | `bing`, `brave`, `duckduckgo`, `google`, `mojeek`, `mullvad_brave`, `mullvad_google`, `yandex`, `yahoo`, `wikipedia`|
+| text()        | `bing`, `brave`, `duckduckgo`, `google`, `mojeek`, `mullvad_brave`, `mullvad_google`, `yandex`, `yahoo`, `wikipedia`, `baidu`, `sogou`|
 | images()      | `duckduckgo` |
 | videos()      | `duckduckgo` |
 | news()        | `duckduckgo`, `yahoo` |
