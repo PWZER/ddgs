@@ -42,13 +42,13 @@ class Sogou(BaseSearchEngine[TextResult]):
         """Build a payload for the Sogou search request."""
         payload = {
             "query": query,
-            "page": page,
+            "page": str(page),
         }
 
         # Add time range filter if specified
         if timelimit and timelimit in self.time_range_dict:
             payload["s_from"] = self.time_range_dict[timelimit]
-            payload["tsn"] = 1
+            payload["tsn"] = str(1)
 
         return payload
 

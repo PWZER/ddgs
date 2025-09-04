@@ -38,8 +38,8 @@ class Baidu(BaseSearchEngine[TextResult]):
         results_per_page = 10
         payload = {
             "wd": query,
-            "rn": results_per_page,
-            "pn": (page - 1) * results_per_page,
+            "rn": str(results_per_page),
+            "pn": str((page - 1) * results_per_page),
             "tn": "json",
         }
 
@@ -77,18 +77,14 @@ class Baidu(BaseSearchEngine[TextResult]):
 
     def request(self, *args: Any, **kwargs: Any) -> str | None:
         """Make a request to the Baidu search engine with CAPTCHA detection."""
-        try:
-            resp = self.http_client.request(*args, **kwargs)
+        resp = self.http_client.request(*args, **kwargs)
 
-            # Detect Baidu CAPTCHA redirect
-            if resp.status_code in (301, 302, 303, 307, 308):
-                location = resp.headers.get("Location", "")
-                if "wappass.baidu.com/static/captcha" in location:
-                    return None  # CAPTCHA detected, return None to indicate failure
+        # Detect Baidu CAPTCHA redirect
+        if resp.status_code in (301, 302, 303, 307, 308):
+            location = resp.headers.get("Location", "")
+            if "wappass.baidu.com/static/captcha" in location:
+                return None  # CAPTCHA detected, return None to indicate failure
 
-            if resp.status_code == 200:
-                return resp.text
-        except Exception as ex:
-            logger.error("Error making request to Baidu: %s", ex)
-            pass
+        if resp.status_code == 200:
+            return resp.text
         return None
